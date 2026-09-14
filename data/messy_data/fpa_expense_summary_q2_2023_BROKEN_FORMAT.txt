@@ -1,0 +1,21 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q2 2023 Departmental Expense Summary
+ACCESS LEVEL: Manager tier (FP&A department)
+PREPARED BY: FP&A Manager
+[SOURCE: exported from legacy PDF report - table formatting degraded on conversion]
+
+
+Department        Budget      Actual    Variance
+Marketing          2,100,000    2,290,000       -190,000
+Logisti
+cs             6,050,000    5,830,000        220,000
+IT                 980,00 0     1,045,000        -65,000
+Accounting&Tax    1,520,000    1,498,00 0         22,000
+
+
+Note: table columns misaligned due to source PDF conversion artifact -
+common when ingesting legacy department reports exported before the 2023
+system migration. Notice department name "Logistics" is broken across two
+lines, and numeric values have stray spaces inserted mid-number. A production
+chunking/preprocessing step needs to normalize this before embedding,
+otherwise retrieval quality on this document will be poor.

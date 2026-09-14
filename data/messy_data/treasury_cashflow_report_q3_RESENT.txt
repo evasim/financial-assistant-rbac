@@ -1,0 +1,23 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q3 Cash Flow and Investment Report (v2 - resent)
+ACCESS LEVEL: Manager tier (Treasury department)
+PREPARED BY: Treasury Manager
+
+--- INTERNAL: TREASURY & MANAGEMENT DISTRIBUTION ---
+
+[NOTE: This appears to be a re-send of an earlier report with the same content.
+Real document stores frequently contain duplicates like this from re-uploads,
+email forwards, or accidental re-exports. Your ingestion pipeline should
+detect and handle this case - e.g. via content hashing or near-duplicate
+detection - rather than treating it as a distinct document.]
+
+Ending cash position for Q3: $14.6M, up from $11.2M in Q2, driven by improved
+receivables collection (DSO reduced from 47 to 41 days).
+
+Short-term investment portfolio breakdown:
+- Money market funds: $6.2M
+- 90-day treasury bills: $4.1M
+- Corporate commercial paper: $2.3M
+
+Currency exposure: approximately 18% of Q4 supplier payments are denominated in
+EUR. Recommend forward contracts to hedge against projected EUR strengthening.

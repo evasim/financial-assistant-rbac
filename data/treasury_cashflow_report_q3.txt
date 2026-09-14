@@ -1,0 +1,24 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q3 Cash Flow and Investment Report
+ACCESS LEVEL: Manager tier (Treasury department)
+PREPARED BY: Treasury Manager
+
+--- INTERNAL: TREASURY & MANAGEMENT DISTRIBUTION ---
+
+Ending cash position for Q3: $14.6M, up from $11.2M in Q2, driven by improved
+receivables collection (DSO reduced from 47 to 41 days).
+
+Short-term investment portfolio breakdown:
+- Money market funds: $6.2M
+- 90-day treasury bills: $4.1M
+- Corporate commercial paper: $2.3M
+
+Currency exposure: approximately 18% of Q4 supplier payments are denominated in
+EUR. Recommend forward contracts to hedge against projected EUR strengthening,
+pending CFO approval on budget allocation noted in the Q4 planning memo.
+
+Debt covenant status: all financial covenants under the revolving credit facility
+remain in compliance. Current ratio at 1.9x against a covenant floor of 1.2x.
+
+Risk management note: no material changes to counterparty risk ratings this
+quarter. Continuing to monitor supplier concentration risk flagged by FP&A.

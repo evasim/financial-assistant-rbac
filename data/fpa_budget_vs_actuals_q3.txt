@@ -1,0 +1,24 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q3 Budget vs Actuals by Department
+ACCESS LEVEL: Manager tier (FP&A department)
+PREPARED BY: FP&A Manager
+
+--- INTERNAL: FP&A & MANAGEMENT DISTRIBUTION ---
+
+Department spend vs. Q3 budget:
+- Marketing: $2.4M actual vs $2.1M budget (14% over, driven by unplanned
+  holiday campaign spend)
+- Logistics: $5.8M actual vs $6.2M budget (6% under, due to delayed Ohio
+  facility closure timeline)
+- IT: $1.1M actual vs $1.0M budget (10% over)
+- Accounting & Tax: $1.5M actual vs $1.6M budget (on track)
+
+Forecast revision: full-year revenue forecast revised down slightly to $332M
+(from $338M), reflecting softer September retail traffic across the Midwest
+region.
+
+Headcount: FP&A is approved to hire two additional financial analysts in Q4,
+per the executive budget allocation. Job postings to go live November 1.
+
+Variance flag: Marketing overspend requires a written justification memo before
+Q4 budget release, per standard policy for departments exceeding 10% variance.

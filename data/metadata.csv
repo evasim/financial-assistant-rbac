@@ -1,0 +1,14 @@
+doc_id,filename,title,doc_type,role_tier,department,sensitivity,notes
+001,cfo_company_summary_q3.txt,Q3 Company-Wide Financial Summary,narrative,exec,executive,high,clean
+002,treasury_cashflow_report_q3.txt,Q3 Cash Flow and Investment Report,narrative,manager,treasury,medium,clean
+003,fpa_budget_vs_actuals_q3.txt,Q3 Budget vs Actuals by Department,narrative,manager,fpa,medium,clean
+004,tax_filing_summary_q3.txt,Q3 Tax Filing and Compliance Summary,narrative,staff,tax,low,clean
+005,payroll_processing_log_q3.txt,Q3 Payroll Processing Log,narrative,staff,accounting,low,clean
+006,business_intelligence_market_trends_q3.txt,Q3 Market Trends and Competitive Analysis,narrative,staff,business_intelligence,low,clean
+007,income_statement.csv,Quarterly Income Statement (2021-2025 clean),financial_statement,manager,fpa,medium,clean - use this for the demo
+008,balance_sheet.csv,Quarterly Balance Sheet (2021-2025 clean),financial_statement,manager,treasury,medium,clean - use this for the demo
+009,cash_flow_statement.csv,Quarterly Cash Flow Statement (2021-2025 clean),financial_statement,manager,treasury,medium,clean - use this for the demo
+010,RBAC_SCHEMA.md,RBAC Access Tier Schema,schema,exec,executive,high,clean
+011,messy_data/income_statement_RAW_export.csv,RAW Income Statement Export (pre-cleaning),financial_statement_raw,,,unknown,MESSY - mixed date formats/currency symbols/missing values/duplicate row/outlier - use this to demonstrate your preprocessing step
+012,messy_data/treasury_cashflow_report_q3_RESENT.txt,Duplicate Treasury Report,narrative_raw,manager,treasury,medium,"MESSY - near-duplicate of doc 002, tests dedup logic"
+013,messy_data/fpa_expense_summary_q2_2023_BROKEN_FORMAT.txt,Q2 2023 Expense Summary (broken formatting),narrative_raw,,fpa,medium,MESSY - broken table formatting AND missing role_tier tag - tests your default-deny RBAC fallback

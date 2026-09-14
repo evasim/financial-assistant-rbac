@@ -1,0 +1,22 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q3 Payroll Processing Log
+ACCESS LEVEL: Staff tier (Accounting function)
+PREPARED BY: Accounting Manager
+
+--- INTERNAL: ACCOUNTING DEPARTMENT USE ---
+
+Total Q3 payroll processed: $18.4M across 1,240 employees (all pay cycles
+combined).
+
+Payroll cycles this quarter: 6 bi-weekly cycles, all processed on schedule,
+no errors flagged in reconciliation.
+
+Benefits enrollment: open enrollment for Q4 benefits closed September 30, with
+94% employee participation, consistent with prior year.
+
+General ledger reconciliation: all payroll-related GL accounts reconciled and
+closed for Q3 with no discrepancies over the $500 materiality threshold.
+
+Note: one payroll correction processed in August due to a miscoded overtime
+entry for the Ohio distribution center team (resolved, back-pay issued same
+cycle).

@@ -1,0 +1,22 @@
+FICTIONAL COMPANY: Nexora Retail Holdings Inc.
+DOCUMENT: Q3 Market Trends and Competitive Analysis
+ACCESS LEVEL: Staff tier (Business Intelligence function)
+PREPARED BY: Business Intelligence Analyst
+
+--- INTERNAL: BUSINESS PARTNERING & BI DISTRIBUTION ---
+
+Market share in core Northeast segment estimated at 14.2%, up 0.6 points from
+Q2, primarily at the expense of a regional competitor that closed two stores
+this quarter.
+
+Customer churn rate: 3.1% quarterly, down from 3.6% in Q2. Improvement linked
+to the new loyalty program launched in July.
+
+Competitive pricing analysis: our average basket price remains 4% above the
+nearest competitor, with no significant impact on conversion observed to date.
+
+Emerging trend: online order volume grew 22% quarter-over-quarter, now
+representing 31% of total revenue, up from 27% in Q2.
+
+Recommendation: propose increased marketing spend allocation toward digital
+channels in Q4 planning, pending FP&A budget review.
