@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer("all-MiniLM-L6-v2") 
 
 import chromadb
-client = chromadb.Client()
+client = chromadb.PersistentClient(path="../chroma_db")
 collection = client.get_or_create_collection(name="Nexora_documents")
 
 # open file path 
@@ -31,8 +31,9 @@ def adding_list(chunks, vectors, role_tier, department, ids):
     )
 
 # calling all functions in one 
-def all_functions(file_path, role_tier, department, ids):
+def all_functions(file_path, role_tier, department, id_prefix):
     contents = open_files(file_path)
     chunks = chunks_list(contents)
     vectors = embed_list(chunks)
+    ids = [f"{id_prefix}_{i}" for i in range(len(chunks))]
     adding_list(chunks, vectors, role_tier, department, ids)
