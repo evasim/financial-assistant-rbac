@@ -22,10 +22,15 @@ def ask_llm(question, context):
 
 # for .txt LLM function
 def answer_question(question, role_tier):
+    visible_tier = {
+        "exec" :["exec", "manager", "staff"],
+        "manager" : ["manager", "staff"],
+        "staff" :["staff"]
+    }
     answer_result = collection.query(
         query_embeddings= model.encode([question]).tolist(),
         n_results = 1, 
-        where={"role_tier":role_tier}
+        where={"role_tier":{"$in":visible_tier[role_tier]}}
     )
     answer_context = answer_result["documents"][0][0]
     answer = ask_llm(question, answer_context)
@@ -34,6 +39,8 @@ def answer_question(question, role_tier):
 # for csv LLM function 
 def answer_csv_question(answer_csv, csv_file_name, csv_quarter, csv_column, csv_role_tier):
     value = get_value_csv(answer_csv, csv_file_name, csv_quarter, csv_column, csv_role_tier)
+    if isinstance(value, str):
+        return value 
     value = value.values[0]
     context_sentence = f"{csv_column} for {csv_quarter} : {value}" # in sentence form so that LLM have something to read
     answers_csv = ask_llm(f"What is the {csv_column} for {csv_quarter}?", context_sentence)
