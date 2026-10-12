@@ -110,9 +110,7 @@ def check_forms(form):
     else: 
         return True 
 
-def handle_question(question, role_tier):
-    form = route_question(question)
-
+def handle_one(form, question, role_tier):
     if not check_forms(form):
         return "Sorry, I could not understand that. Please include a quarter, like 2025-Q3."
     if form["source"] == "txt":
@@ -125,3 +123,12 @@ def handle_question(question, role_tier):
     return answer_csv_question(
         csv_files[form["file"]], form["file"], form["quarter"], form["column"], role_tier
     )
+
+def handle_question(question, role_tier):
+    if role_tier not in ["exec", "manager", "staff"]:
+        return "Access Denied"
+    form = route_question(question)
+    forms = form if isinstance(form, list) else [form]
+    answers = [handle_one(f, question, role_tier) for f in forms]
+    return "\n".join(answers)
+    

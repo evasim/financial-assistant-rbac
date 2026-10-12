@@ -29,9 +29,9 @@ def get_value_csv(csv, file_name, quarter_csv, column_csv, role_tier_csv):
     }
     elif file_name == "income_statement":
         csv_allowed_column = {
-    "exec": ["revenue", "cogs", "gross_profit", "marketing_expense", "logistics_expense", "it_expense", "ga_expense", "payroll_expense", "net_income"],
-    "manager": ["revenue", "net_income"],
-    "staff": []
+        "exec": ["revenue", "cogs", "gross_profit", "marketing_expense", "logistics_expense", "it_expense", "ga_expense", "payroll_expense", "net_income"],
+        "manager": ["revenue", "net_income"],
+        "staff": []
     }
     else:
         return "Unknown file"
