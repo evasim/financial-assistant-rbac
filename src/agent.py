@@ -1,5 +1,5 @@
 import json
-from llm import answer_question, answer_csv_question, check_forms, income_csv, balance_csv, cash_csv
+from llm import answer_question, answer_csv_question, check_forms, income_csv, balance_csv, cash_csv, valid_columns
 from llm import client
 
 tools = [
@@ -7,7 +7,7 @@ tools = [
         "type": "function", 
         "function":{
             "name": "get_value_csv", 
-            "description":"Get one number from a financial statement for one quarter.",
+            "description":"Get one exact number from a financial statement (income statement, balance sheet, cash flow) for one quarter. Use this for any specific figure like revenue, net income, ending cash or total assets.",
             "parameters":{
                 "type":"object",
                 "properties":{
@@ -15,8 +15,8 @@ tools = [
                         "type":"string",
                         "enum":["income_statement","balance_sheet","cash_flow_statement"],
                     },
-                    "quarter":{"type":"string", "description":"like 2025-Q3"},
-                    "column":{"type":"string", "description": "column name, like net_income"},
+                    "quarter":{"type":"string", "description":"format YYYY-Qn, like 2025-Q3. Convert wording like 'third quarter of 2025' to 2025-Q3."},
+                    "column":{"type":"string", "description": f"Exact column name. Valid columns by file: {valid_columns}"},
                 },
                 "required":["file","quarter","column"], 
             }
@@ -27,7 +27,7 @@ tools = [
         "type": "function",
         "function":{
             "name":"answer_question",
-            "description":"Search the company text documents for explanations, reasons, plans or risks.",
+            "description":"Search the narrative text documents for explanations, reasons, plans, risks and budgets. Do not use this for exact financial statement figures for a specific quarter.",
             "parameters":{
                 "type":"object",
                 "properties":{                    
@@ -72,9 +72,12 @@ def run_agent(question, role_tier, max_rounds=5):
                 "You are a financial assistant. "
                 "Use the tools to find facts. "
                 "Answer only from the tool results. "
+                "For any exact figure for a specific quarter, such as ending cash, revenue or net income, use get_value_csv. "
+                "Use answer_question only for explanations, reasons, plans and risks. "
                 "Report numbers exactly as the tool gives them. Do not add units and do not convert them. "
                 "If a tool says Access Denied, reply: Access Denied. "
-                "If a tool says Invalid request, ask the user to include a valid quarter between 2021-Q1 and 2025-Q4. "
+                "If a tool says Invalid request, fix the inputs and try once more. If it still fails, ask the user to include a valid quarter between 2021-Q1 and 2025-Q4. "
+                "If the user asks for a figure but does not give a quarter, do not use a tool. Ask which quarter they mean. "
                 "If the tools do not have the answer, say \"I don't know\". "
                 "Never guess numbers."
             ),
