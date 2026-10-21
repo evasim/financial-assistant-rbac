@@ -62,25 +62,27 @@ def run_tool(name, args, role_tier):
     else:
         return "Unknown tool"
 
-def run_agent(question, role_tier, max_rounds=5):
+SINGLE_PROMPT = (
+    "You are a financial assistant. "
+    "Use the tools to find facts. "
+    "Answer only from the tool results. "
+    "For any exact figure for a specific quarter, such as ending cash, revenue or net income, use get_value_csv. "
+    "Use answer_question for explanations, reasons, plans and risks. These do not need quarter or year, so just search. "
+    "Report numbers exactly as the tool gives them. Do not add units and do not convert them. "
+    "If a tool says Access Denied, reply: Access Denied. "
+    "If a tool says Invalid request, fix the inputs and try once more. If it still fails, ask the user to include a valid quarter between 2021-Q1 and 2025-Q4. "
+    "Only if the user asks for an exact number, such as revenue, net income or ending cash, and gives no quarter, do not use a tool. Ask which quarter they mean. "
+    "If the tools do not have the answer, say \"I don't know\". "
+    "Never guess numbers."
+)
+
+def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds=5):
     if role_tier not in ["exec", "manager", "staff"]:
         return "Access Denied"
     messages = [
         {
             "role":"system", 
-            "content":(
-                "You are a financial assistant. "
-                "Use the tools to find facts. "
-                "Answer only from the tool results. "
-                "For any exact figure for a specific quarter, such as ending cash, revenue or net income, use get_value_csv. "
-                "Use answer_question only for explanations, reasons, plans and risks. "
-                "Report numbers exactly as the tool gives them. Do not add units and do not convert them. "
-                "If a tool says Access Denied, reply: Access Denied. "
-                "If a tool says Invalid request, fix the inputs and try once more. If it still fails, ask the user to include a valid quarter between 2021-Q1 and 2025-Q4. "
-                "If the user asks for a figure but does not give a quarter, do not use a tool. Ask which quarter they mean. "
-                "If the tools do not have the answer, say \"I don't know\". "
-                "Never guess numbers."
-            ),
+            "content": system_prompt,
         },
         {"role":"user","content":question},
     ]
@@ -99,7 +101,7 @@ def run_agent(question, role_tier, max_rounds=5):
         messages.append(msg)
         for call in msg.tool_calls:
             args = json.loads(call.function.arguments)
-            result = run_tool(call.function.name, args, role_tier)
+            result = tool_runner(call.function.name, args, role_tier)
             #print("TOOL:", call.function.name, args, "->", result)
             messages.append({
                 "role":"tool", 
@@ -107,4 +109,7 @@ def run_agent(question, role_tier, max_rounds=5):
                 "content":str(result),
             })
 
-    return "Sorry, I could not finish this request"  
+    return "Sorry, I could not finish this request" 
+
+def run_single(question, role_tier):
+    return run_agent(question, role_tier, SINGLE_PROMPT, tools, run_tool) 
