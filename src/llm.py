@@ -21,7 +21,8 @@ def ask_llm(question, context):
     """
     response = client.chat.completions.create(
         model = "openai/gpt-oss-20b", 
-        messages= [{"role":"user", "content": prompt}]
+        messages= [{"role":"user", "content": prompt}], 
+        temperature=0, 
     )
     return response.choices[0].message.content
 

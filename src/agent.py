@@ -76,6 +76,23 @@ SINGLE_PROMPT = (
     "Never guess numbers."
 )
 
+DATA_PROMPT = (
+    "You are a data agent. You only answer questions about exact financial figures. "
+    "Use get_value_csv to find every figure. "
+    "Answer only from the tool result. "
+    "Report numbers exactly as the tool gives them. Do not add units and do not convert them. "
+    "If a tool says Access Denied, reply: Access Denied. "
+    "If a tool says Invalid request, fix the inputs and try once more. If it still fails, ask the user to include a valid quarter between 2021-Q1 and 2025-Q4. "
+    "If the user asks for a figure but gives no quarter, do not use a tool. Ask which quarter they mean. "
+    "If the tool does not have the answer, say \"I don't know\". "
+    "Never guess numbers. "
+)
+
+data_tools = [tools[0]]
+
+def run_data(question, role_tier):
+    return run_agent(question, role_tier, DATA_PROMPT, data_tools, run_tool)
+
 def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds=5):
     if role_tier not in ["exec", "manager", "staff"]:
         return "Access Denied"
@@ -92,6 +109,7 @@ def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds
             model = "openai/gpt-oss-20b", 
             messages=messages, 
             tools=tools, 
+            temperature=0, 
         )
         msg = response.choices[0].message
 
