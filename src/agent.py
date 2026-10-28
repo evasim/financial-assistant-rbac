@@ -88,10 +88,79 @@ DATA_PROMPT = (
     "Never guess numbers. "
 )
 
+DOC_PROMPT = (
+    "You are a document agent. You only answer questions about explanations, reasons, plans and risks. "
+    "Use answer_question to search the documents. "
+    "Answer only from the tool result. "
+    "If a tool says Access Denied, reply: Access Denied. "
+    "If the user asks for an exact figure for a specific quarter, such as revenue, net income or ending cash, do not answer. Say \"I don't know\". "
+    "If the tool does not have the answer, say \"I don't know\". "
+    "Never guess or make up facts. "
+)
+
+MANAGER_PROMPT = (
+    "You are a manager. You decide which helper should answer the question. "
+    "Use ask_data_agent to find every figure. "
+    "Use ask_doc_agent to find explanations, reasons, plans and risks. "
+    "If the question needs both, use ask_data_agent and ask_doc_agent, then combine their answers. "
+    "Answer only from what the helpers tell you. Never answer by yourself. "
+    "Report numbers exactly as the helper gives them. Do not add units and do not convert them. "
+    "If a helper says Access Denied, reply: Access Denied. "
+    "If the helpers do not have the answer, say \"I don't know\". "
+    "Never guess. "
+)
+
 data_tools = [tools[0]]
 
 def run_data(question, role_tier):
     return run_agent(question, role_tier, DATA_PROMPT, data_tools, run_tool)
+
+doc_tools = [tools[1]]
+
+def run_doc(question, role_tier):
+    return run_agent(question, role_tier, DOC_PROMPT, doc_tools, run_tool)
+
+manager_tools = [
+    {
+        "type": "function", 
+        "function":{
+            "name" : "ask_data_agent", 
+            "description": "Ask the data agent for an exact figure from the financial statements, such as revenue, net income or ending cash for one quarter.",
+            "parameters":{
+                "type": "object", 
+                "properties":{
+                    "question":{"type":"string", "description":"the user's question in plain words"},                    
+                },
+                "required":["question"]
+            }
+        }
+    },
+    {
+        "type":"function", 
+        "function":{
+            "name": "ask_doc_agent", 
+            "description": "Ask the document agent for explanations, reasons, plans, risks or budgets from the text documents. Do not use it for exact figures.",
+            "parameters":{
+                "type": "object", 
+                "properties":{
+                    "question":{"type":"string", "description":"the user's question in plain words"},                    
+                },
+                "required":["question"]
+            }
+        }
+    },
+]
+
+def manager_runner(name, args, role_tier):
+    if name == "ask_data_agent":
+        return run_data(args["question"], role_tier)
+    elif name == "ask_doc_agent":
+        return run_doc(args["question"], role_tier)
+    else: 
+        return "Unknown tool"
+
+def run_manager(question, role_tier):
+    return run_agent(question, role_tier, MANAGER_PROMPT, manager_tools, manager_runner)
 
 def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds=5):
     if role_tier not in ["exec", "manager", "staff"]:
