@@ -106,6 +106,7 @@ MANAGER_PROMPT = (
     "Answer only from what the helpers tell you. Never answer by yourself. "
     "Report numbers exactly as the helper gives them. Do not add units and do not convert them. "
     "If a helper says Access Denied, reply: Access Denied. "
+    "If a helper asks the user for more information, such as a quarter, pass that message to the user. "
     "If the helpers do not have the answer, say \"I don't know\". "
     "Never guess. "
 )
