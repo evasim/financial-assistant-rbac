@@ -1,6 +1,6 @@
 # Financial Assistant with RBAC and Multi-Agent AI
 
-An AI assistant for a finance team and it answers questions about a company's financial statements and internal reports. Each user only see based on their roles. 
+An AI assistant for a finance team. It answers questions about a company's financial statements and internal reports. Each users only sees what their role allowed. 
 
 All data is **synthetic**. The company, **Nexora Retail Holdings Inc**, is fictional. 
 
@@ -8,8 +8,8 @@ Built with free tools only.
 
 **What it does**
 - Answers exact figures from financial statements.
-- Answer explanations from internal text reports.
-- Enforces **role-based access control(RBAC)** for 3 roles: exec, manager, staff.
+- Answers explanations from internal text reports.
+- Enforces **role-based access control (RBAC)** for 3 roles: exec, manager, staff.
 - Uses a small team of **AI agents**: A Manager routes each question to a Data agent or a Document agent.
 
 **Architecture**
@@ -48,15 +48,13 @@ Security is enforced in code, **before the model sees any data.**
 
 **Tech stack**
 - Python, Pandas
-- Sentence-transformer(all-MiniLM-L6-v2)
+- sentence-transformer(all-MiniLM-L6-v2)
 - ChromaDB
 - Groq API, model openai/gpt-oss-20b
 - OpenAI-compatible tool calling
 - Jupyter notebooks for testing
 
 **Setup**
-<!--TODO: check these match your repo-->
-
 1. Clone the repo.
 2. Install the packages: pip install -r requirements.txt
 3. Create a .env file with your Groq API key. (.env is git-ignored and never committed.)
