@@ -13,6 +13,7 @@ Built with free tools only.
 - Uses a small team of **AI agents**: A Manager routes each question to a Data agent or a Document agent.
 
 **Architecture**
+'''
 User question + role (role comes from code, never from the user or the model)
         │
         ▼
@@ -27,6 +28,7 @@ User question + role (role comes from code, never from the user or the model)
  (pandas lookup,      (filtered by role tier
   allowed columns      before search)
   per role)
+'''
 
 All agents share **one reusable agent loop (run_agent)**. Each agent only brings its own rules (system prompt) and its own tools.
 
