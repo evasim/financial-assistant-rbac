@@ -1,6 +1,25 @@
 import json
+import re
 from llm import answer_question, answer_csv_question, check_forms, income_csv, balance_csv, cash_csv, valid_columns
 from llm import client
+from csv_lookup import get_value_csv as lookup_value
+
+true_numbers =[]
+
+def find_numbers(text):
+    found = re.findall(r"\d[\d,]*\.?\d*", text)
+    numbers = []
+    for f in found:
+        value = float(f.replace(",", ""))
+        if value >= 10000:
+            numbers.append(value)
+    return numbers
+
+def check_answer(answer):
+    for n in find_numbers(answer):
+        if n not in true_numbers:
+            return False
+    return True 
 
 tools = [
     {
@@ -54,6 +73,9 @@ def run_tool(name, args, role_tier):
             "balance_sheet":balance_csv,
             "cash_flow_statement": cash_csv,
         }
+        raw = lookup_value(csv_files[args["file"]], args["file"], args["quarter"], args["column"], role_tier)
+        if not isinstance(raw, str):
+            true_numbers.append(float(raw.iloc[0]))
         return answer_csv_question(
             csv_files[args["file"]], args["file"], args["quarter"], args["column"], role_tier
         )
@@ -201,3 +223,10 @@ def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds
 
 def run_single(question, role_tier):
     return run_agent(question, role_tier, SINGLE_PROMPT, tools, run_tool) 
+
+def run_checked(question, role_tier):
+    true_numbers.clear()
+    answer = run_manager(question, role_tier)
+    if check_answer(str(answer)):
+        return answer
+    return "Sorry, I could not verify the numbers in this answer."
