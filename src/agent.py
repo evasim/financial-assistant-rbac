@@ -66,6 +66,11 @@ def run_tool(name, args, role_tier):
             "quarter":args["quarter"],
             "column":args["column"],
         }
+        file = args["file"]
+        column = args["column"]
+        if file in valid_columns and column not in valid_columns[file]:
+            right_files = [f for f, cols in valid_columns.items() if column in cols]
+            return f"Invalid request. The column {column} is not in {file}. Files that have it: {right_files}. Valid columns for {file}: {valid_columns[file]}"
         if not check_forms(form):
             return "Invalid request. Check the file, column and quarter."
         csv_files ={
@@ -115,7 +120,8 @@ DOC_PROMPT = (
     "Use answer_question to search the documents. "
     "Answer only from the tool result. "
     "If a tool says Access Denied, reply: Access Denied. "
-    "If the user asks for an exact figure for a specific quarter, such as revenue, net income or ending cash, do not answer. Say \"I don't know\". "
+    "The tool already checks the user's access. If the tool returns information, the user is allowed to see it, so report it. "
+    "Do not report financial statement figures such as revenue, net income or ending cash; for those, say \"I don't know\". Plans, percentages and budgets from the documents are fine to report. "    
     "If the tool does not have the answer, say \"I don't know\". "
     "Never guess or make up facts. "
 )
@@ -140,8 +146,11 @@ def run_data(question, role_tier):
 
 doc_tools = [tools[1]]
 
+# def run_doc(question, role_tier):
+#     return run_agent(question, role_tier, DOC_PROMPT, doc_tools, run_tool)
+
 def run_doc(question, role_tier):
-    return run_agent(question, role_tier, DOC_PROMPT, doc_tools, run_tool)
+    return answer_question(question, role_tier)
 
 manager_tools = [
     {
