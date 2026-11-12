@@ -1,5 +1,7 @@
 import os 
 import json
+import time
+from groq import RateLimitError
 from dotenv import load_dotenv
 from csv_lookup import import_csv
 from groq import Groq
@@ -12,6 +14,16 @@ cash_csv = import_csv("../data/cash_flow_statement.csv")
 load_dotenv()
 client = Groq(api_key = os.getenv("GROQ_API_KEY"))
 
+def call_llm(**kwargs):
+    for attempt in range(3):
+        try:
+            return client.chat.completions.create(**kwargs)
+        except RateLimitError:
+            wait = 2 ** (attempt + 1)
+            print(f"Rate limit hit. Waiting {wait} seconds...")
+            time.sleep(wait)
+    return client.chat.completions.create(**kwargs)
+
 def ask_llm(question, context):
     prompt = f"""Answer the question using only the context below. If the answer is not in context, say "I don't know".
     
@@ -19,7 +31,7 @@ def ask_llm(question, context):
 
     Question : {question}
     """
-    response = client.chat.completions.create(
+    response = call_llm(
         model = "openai/gpt-oss-20b", 
         messages= [{"role":"user", "content": prompt}], 
         temperature=0, 

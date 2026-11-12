@@ -1,7 +1,7 @@
 import json
 import re
 from llm import answer_question, answer_csv_question, check_forms, income_csv, balance_csv, cash_csv, valid_columns
-from llm import client
+from llm import client, call_llm
 from csv_lookup import get_value_csv as lookup_value
 
 true_numbers =[]
@@ -206,7 +206,7 @@ def run_agent(question, role_tier, system_prompt, tools, tool_runner, max_rounds
     ]
 
     for _ in range(max_rounds):
-        response = client.chat.completions.create(
+        response = call_llm(
             model = "openai/gpt-oss-20b", 
             messages=messages, 
             tools=tools, 
